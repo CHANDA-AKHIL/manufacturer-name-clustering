@@ -12,7 +12,7 @@ Key skills demonstrated:
 - Visualization of cluster distributions and patterns
 - Evaluation with F1-Score
 
-Developed as part of my BTech in Computer Science (AI/ML) to practice unsupervised learning.
+Developed as part of my BTech in Computer Science to practice unsupervised learning.
 
 Citation: Georg Vetter. Manufacturer Name Clustering. https://kaggle.com/competitions/manufacturer-name-clustering, 2024. Kaggle.
 
