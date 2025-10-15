@@ -23,7 +23,7 @@ Citation: Georg Vetter. Manufacturer Name Clustering. https://kaggle.com/competi
   - Cleaned text (lowercase, remove special characters).
   - Vectorized using TF-IDF with char n-grams (2-4).
 
-Note: Datasets not included due to size. Download from Kaggl.
+Note: Datasets not included due to size. Download from Kaggle.
 
 ## Methodology
 1. **Data Preparation**: Load CSVs, detect text column, clean names.
