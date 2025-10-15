@@ -1,6 +1,6 @@
 # ============================================================
-# 🚀 Manufacturer Name Clustering
-# Author: [Your Name]
+# Manufacturer Name Clustering
+# Author: [Chanda Akhil]
 # Description: This script clusters manufacturer names to reduce heterogeneity (e.g., typos, mergers)
 # using KNN and connected components on TF-IDF features. Includes visualizations for analysis.
 # Dependencies: pandas, numpy, re, matplotlib, seaborn, scikit-learn, wordcloud, scipy
@@ -21,7 +21,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # ============================================================
-# 1️⃣ Load and Prepare Data
+# Load and Prepare Data
 # ============================================================
 # Load datasets; assumes CSV files are in 'data/' folder.
 # Download from https://kaggle.com/competitions/manufacturer-name-clustering/data
@@ -40,13 +40,13 @@ def detect_text_column(df):
     raise ValueError("No text column found!")
 
 text_col = detect_text_column(train)
-print(f"🧩 Detected text column: {text_col}")
+print(f" Detected text column: {text_col}")
 
 # Combine train and test for consistent preprocessing
 all_data = pd.concat([train, test], axis=0, ignore_index=True)
 
 # ============================================================
-# 2️⃣ Text Cleaning
+# Text Cleaning
 # ============================================================
 # Clean text by converting to lowercase, removing special characters, and normalizing spaces
 def clean_text(txt):
@@ -60,14 +60,14 @@ def clean_text(txt):
 all_data["clean_name"] = all_data[text_col].apply(clean_text)
 
 # ============================================================
-# 3️⃣ TF-IDF Vectorization
+# TF-IDF Vectorization
 # ============================================================
 # Use character n-grams (2-4) to capture spelling variations
 vectorizer = TfidfVectorizer(analyzer="char_wb", ngram_range=(2, 4))
 X = vectorizer.fit_transform(all_data["clean_name"])
 
 # ============================================================
-# 4️⃣ KNN Clustering
+# KNN Clustering
 # ============================================================
 # Use KNN to find neighbors and connected components for clustering
 k = 5
@@ -89,10 +89,10 @@ adj = csr_matrix((vals, (rows, cols)), shape=(len(all_data), len(all_data)))
 n_clusters, labels = connected_components(csgraph=adj, directed=False)
 all_data["cluster"] = labels
 
-print(f"✅ Total clusters found: {n_clusters}")
+print(f" Total clusters found: {n_clusters}")
 
 # ============================================================
-# 5️⃣ Submission File
+# Submission File
 # ============================================================
 # Ensure test set has an ID column; create if missing
 if "ID" not in test.columns:
@@ -101,15 +101,15 @@ if "ID" not in test.columns:
 test_clusters = all_data.iloc[len(train):][["ID", "cluster"]]
 test_clusters.columns = ["ID", "TARGET"]
 test_clusters.to_csv('submission.csv', index=False)
-print("📂 submission.csv saved successfully!")
+print(" submission.csv saved successfully!")
 
 # ============================================================
-# 6️⃣ Visualization Section
+# Visualization Section
 # ============================================================
 # (A) Cluster Size Distribution
 plt.figure(figsize=(10, 5))
 sns.countplot(x="cluster", data=all_data, palette="viridis")
-plt.title("🧱 Cluster Size Distribution", fontsize=16, weight='bold')
+plt.title(" Cluster Size Distribution", fontsize=16, weight='bold')
 plt.xlabel("Cluster Label")
 plt.ylabel("Count of Manufacturers")
 plt.xticks(rotation=90)
@@ -160,9 +160,10 @@ cluster_summary["count"] = all_data["cluster"].value_counts().sort_index().value
 corr_data = cluster_summary[["length", "count"]].corr()
 plt.figure(figsize=(5, 4))
 sns.heatmap(corr_data, annot=True, cmap="coolwarm", fmt=".2f", square=True)
-plt.title("🔥 Correlation Heatmap: Cluster Size vs Name Length", fontsize=14, weight='bold')
+plt.title(" Correlation Heatmap: Cluster Size vs Name Length", fontsize=14, weight='bold')
 plt.tight_layout()
 plt.savefig('visualizations/cluster_heatmap.png')
 plt.show()
 
-print("🎨 Visualization Complete — Ready to Present!")
+
+print(" Visualization Complete — Ready to Present!")
